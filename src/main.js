@@ -1,28 +1,42 @@
 import * as THREE from "three";
 
+// Scene
 const scene = new THREE.Scene();
+
+// Camera
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
+camera.position.z = 12;
 
+// Renderer
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+// The Sun
+const sunGeometry = new THREE.SphereGeometry(1, 32, 32);
+const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+sun.position.set(0, 0, 0);
+scene.add(sun);
 
-camera.position.z = 5;
+// The Earth
+const earthGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+const earthMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+earth.position.set(-5, 0, 0);
+scene.add(earth);
 
-function animate() {
-  cube.rotation.x += 0.01;
-  // cube.rotation.y += 0.01;
-  // cube.rotation.z += 0.01;
-  renderer.render(scene, camera);
-}
+// The Moon
+const moonGeometry = new THREE.SphereGeometry(0.15, 32, 32);
+const moonMaterial = new THREE.MeshBasicMaterial({ color: 0x888888 });
+const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+moon.position.set(-6, 0, 0);
+scene.add(moon);
+
+// Renderer
+renderer.render(scene, camera);
